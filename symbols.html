@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>symbols</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+        <link rel="manifest" href="icon/site.webmanifest">
+        <link rel="stylesheet" type="text/css" href="main-style.css">
+    </head>
+    <body>
+
+        <div class="currency-displays">
+            <h3 id="cash-p1"><span style="color: aqua">$</span>: </h3>
+            <h3 id="cash-display"></h3>
+        </div>
+
+        <br>
+
+        <div class="mainbuttonwrapper">
+            <p id="button1" class="mainbuttons">button 1 <br> start producing <span style="color: aqua">$</span> at 1/s <br> costs <span style="color: aqua">$</span>0</p>
+            <br>
+            <p id="sub1" class="descsubs"><span style="color: rgb(0, 217, 255)">-</span> = new feature</p>
+
+            <p id="button2" class="mainbuttons hidden">button 2 <br> add +2 <span style="color: aqua">$</span> per second <br> costs <span style="color: aqua">$</span>15</p>
+            
+            <p id="button3" class="mainbuttons hidden">button 3 <br> add +2.5 <span style="color: aqua">$</span> per second <br> costs <span style="color: aqua">$</span>60</p>
+
+            <p id="button4" class="mainbuttons hidden">button 4 <br> multiply <span style="color: aqua">$</span> by 2.5 <br> costs <span style="color: aqua">$</span>80</p>
+
+            <p id="button5_1" class="mainbuttons hidden">button 5 <span style="color: rgb(99, 99, 99);">(0/3)</span><br> add +1% of total <span style="color: aqua">$</span> per level <br> <em><span style="font-size: 10px; color: rgb(99, 99, 99);">+($/100)</span></em> costs <span style="color: aqua">$</span>175</p>
+            <br>
+            <p id="sub2" class="descsubs hidden"><span style="color: rgb(200, 0, 0)">-</span> = dead end</p>
+            <p id="sub3" class="descsubs hidden"><span style="color: rgb(209, 178, 0)">-</span> = multi-buyable</p>
+        </div>
+
+        <h3 id="debug"></h3>
+
+        <h3 id="ver"><a href="patch-notes.html" target="_blank">pre-release (v0.0.1)</a></h3>
+
+        <script src="main-script.js"></script>
+
+    </body>
+</html>
