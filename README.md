@@ -1,5 +1,4 @@
 - silly little button game inspired in part by Antimatter Dimensions on Steam
 - currently in development (like 8-10% done maybe)
 - solo project
-- doesn't save (at least to my knowledge)
 - can also be played at symbolsgame.glitch.me
