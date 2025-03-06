@@ -2,7 +2,6 @@
 for recommendations, issues, or any other matter related to this game
 you can contact me at professionalsillypants@gmail.com
 p.s. click on the version to see the patch notes
-p.p.s. progress doesn't save but currency does
 */
 
 var money = 0;
