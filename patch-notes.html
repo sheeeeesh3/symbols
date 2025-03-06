@@ -3,6 +3,8 @@
     <head>
         <title>patch notes</title>
         <meta charset="UTF-8">
+        <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
         <style>
             body {
                 background-color: black;
@@ -16,22 +18,49 @@
             }
 
             .listcontainer {
+                max-width: 500px;
                 text-align: center;
+                display: inline-block;
             }
 
             .list {
                 display: inline-block;
+                text-align: left;
+            }
+            
+            #title {
+                font-size: 45px;
             }
         </style>
     </head>
     <body>
-        <h1>symbols patch notes</h1>
+        <h1 id="title">symbols patch notes</h1>
+
+        <h2>pre-release (v0.0.3)</h2>
+
+        <div class="listcontainer">
+            <ul class="list">
+                <li>added a kofi link; donate if you want!</li>
+                <li>added randomized console messages upon loading the site (was this necessary? <span style="color:red">yes.</span>)</li>
+            </ul>
+        </div>
+
+        <h2>pre-release (v0.0.2)</h2>
+
+        <div class="listcontainer">
+            <ul class="list">
+                <li>added saving (whoa)</li>
+                <li>added a thing that displays <span style="color:aqua;">$</span> being earned per second</li>
+                <li>added a button to reset your data (use with caution!)</li>
+                <li>added the beginnings of the panel system</li>
+            </ul>
+        </div>
         
         <h2>pre-release (v0.0.1)</h2>
 
         <div class="listcontainer">
             <ul class="list">
-                <li>nothing *gasp*</li>
+                <li>added the first ten buttons</li>
             </ul>
         </div>
     </body>
