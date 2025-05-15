@@ -1,70 +1,76 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!--
-        s y m b o l s
-        an incremental oooh-cool-number-go-up game made by Tristan Schneichel
-        inspired by Antimatter Dimsensions and a couple of silly Roblox games (The Ultimate Upgrade Tree, Everything Upgrade Tree)
-        contact me at professionalsillypants@gmail.com
-        -->
         <meta charset="UTF-8"/>
         <title>symbols</title>
-        <link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
-        <link rel="stylesheet" type="text/css" href="main-style.css">
+        <link href="http://fonts.googleapis.com/css?family=Courier+Prime" rel="stylesheet" type="text/html">
+        <link id="favicon" rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+        <style>
+            body {
+                background-color: black;
+                text-align: center;
+            }
+
+            * {
+                font-family: "Courier Prime", Courier, monospace;
+                color: white;
+                font-weight: bold;
+                font-size: 25px;
+            }
+
+            #title {
+                font-size: 45px;
+                margin: 75px 0;
+            }
+
+            a:link {
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+            }
+
+            a:visited {
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+            }
+
+            a:hover {
+                color: rgb(150, 150, 150);
+                text-decoration: none;
+            }
+
+            a:active {
+                color: rgb(255, 255, 255);
+                text-decoration: none;
+            }
+
+            #bodygrid {
+                display: grid;
+                grid-template-areas: 
+                "gamelink noteslink";
+                grid-template-columns: 1fr 1fr;
+                text-align: center;
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                width: 99%;
+            }
+
+            #gameslink {
+                grid-area: gamelink;
+            }
+
+            #noteslink {
+                grid-area: noteslink;
+            }
+        </style>
     </head>
     <body>
-
-        <div class="currency-displays">
-            <h3 id="cash-p1"><span style="color: aqua">$</span>: </h3>
-            <h3 id="cash-display"></h3>
-        </div>
-
-        <br>
-
-        <div class="mainbuttonwrapper">
-            <p id="button1" class="mainbuttons" onclick="b1bought()">button 1 <br> start producing <span style="color: aqua">$</span> at 1/s <br> costs <span style="color: aqua">$</span>0</p>
-            <p id="button2" class="mainbuttons hidden" onclick="b2bought()">button 2 <br> add +2 <span style="color: aqua">$</span> per second <br> costs <span style="color: aqua">$</span>15</p>
-            <p id="button3" class="mainbuttons hidden" onclick="b3bought()">button 3 <br> add +2.5 <span style="color: aqua">$</span> per second <br> costs <span style="color: aqua">$</span>50</p>
-            <p id="button4" class="mainbuttons hidden" onclick="b4bought()">button 4 <br> multiply <span style="color: aqua">$</span> by 2.5 <br> costs <span style="color: aqua">$</span>80</p>
-            <p id="button5_1" class="mainbuttons hidden" onclick="b5_1bought()">button 5 <span style="color: rgb(99, 99, 99);">(1/3)</span><br> +1.2x <span style="color: aqua">$</span> compounding per level <br> costs <span style="color: aqua">$</span>200</p>
-            <p id="button5_2" class="mainbuttons hidden" onclick="b5_2bought()">button 5 <span style="color: rgb(99, 99, 99);">(2/3)</span><br> +1.2x <span style="color: aqua">$</span> compounding per level <br> costs <span style="color: aqua">$</span>500</p>
-            <p id="button5_3" class="mainbuttons hidden" onclick="b5_3bought()">button 5 <span style="color: rgb(99, 99, 99);">(3/3)</span><br> +1.2x <span style="color: aqua">$</span> compounding per level <br> costs <span style="color: aqua">$</span>750</p>
-            <p id="button6" class="mainbuttons hidden" onclick="b6bought()">button 6 <br> triple <span style="color: aqua">$</span> gain <br> costs <span style="color: aqua">$</span>300</p>
-            <p id="button7" class="mainbuttons hidden" onclick="b7bought()">button 7 <br> +0.5x <span style="color: aqua">$</span> gain per main button owned <br> costs <span style="color: aqua">$</span>800</p>
-            <p id="button8" class="mainbuttons hidden" onclick="b8bought()">button 8 <br> increase the cap of button 5 by 2 <br> costs <span style="color: aqua">$</span>1000</p>
-            <p id="button5_4" class="mainbuttons hidden" onclick="b5_4bought()">button 5 <span style="color: rgb(99, 99, 99);">(4/5)</span><br> +1.2x <span style="color: aqua">$</span> compounding per level <br> costs <span style="color: aqua">$</span>1200</p>
-            <p id="button5_5" class="mainbuttons hidden" onclick="b5_5bought()">button 5 <span style="color: rgb(99, 99, 99);">(5/5)</span><br> +1.2x <span style="color: aqua">$</span> compounding per level <br> costs <span style="color: aqua">$</span>1750</p>
-            <p id="button9" class="mainbuttons hidden" onclick="b9bought()">button 9 <br> increase button 5's boost to +1.3x <br> costs <span style="color: aqua">$</span>1500</p>
-            <p id="button10" class="mainbuttons hidden" onclick="b10bought()">button 10 <br> unlock the <span style="color: rgb(255, 187, 0)">!</span> panel<br> costs <span style="color: aqua">$</span>2500</p>
-            <br>
-            <p id="sub1" class="descsubs"><span style="color: rgb(0, 217, 255)">-</span> = new feature</p>
-            <p id="sub2" class="descsubs hidden"><span style="color: rgb(200, 0, 0)">-</span> = dead end</p>
-            <p id="sub3" class="descsubs hidden"><span style="color: rgb(209, 178, 0)">-</span> = multi-buyable</p>
-        </div>
-
-        <div id="panellayout">
-            <div id="sidebarcontainer">
-                <div class="sidebaritem hidden" id="energypaneltoggle">!</div>
-                <div class="sidebaritem hidden" id="sidebartoggle">?</div>
-            </div>
-            <div id="panelcontainer">
-                <div class="panel hidden" id="energypanel">
-                    <p>in progress</p>
-                </div>
+        <div id="container">
+            <h1 id="title">symbols</h1>
+            <div id="bodygrid">
+                <h3><a id="gamelink" href="game.html" target="_self">game</a></h3>
+                <h3><a id="noteslink" href="patchnotes.html" target="_self">patch notes</a></h3>
             </div>
         </div>
-
-        <br><br>
-
-        <h3 id="debug"></h3>
-        <div id="footergrid">  
-            <h3 id="ver"><a href="patch-notes.html" target="_blank">pre-release (v0.0.3)</a></h3>
-            <h3 id="kofi"><a href="https://ko-fi.com/sheeeeesh3" target="_blank"><span style="color:aquamarine">support me</span></a></h3>
-            <h3 id="reset" onclick="resetdata()">reset data</h3>
-        </div>
-
-        <script src="main-script.js"></script>
-
     </body>
 </html>
