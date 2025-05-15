@@ -4,13 +4,16 @@ body {
 }
 
 * {
-    font-family: courier;
+    font-family: "Courier Prime", Courier, monospace;
     color: white;
     font-weight: bold;
 }
 
 .mainbuttonwrapper {
     text-align: center;
+    height: fit-content;
+    position: relative;
+    top: 50px;
 }
 
 .mainbuttons {
@@ -24,13 +27,12 @@ body {
     max-height: 120px;
     display: inline-block;
     position: relative;
-    top: 50px;
 }
 
 .descsubs {
     color: white;
     font-size: 13px;
-    margin-top: 60px;
+    margin-top: 10px;
     width: 200px;
     display: inline-block;
 }
@@ -38,6 +40,19 @@ body {
 h3 {
     font-size: 20px;
     text-align: left;
+    float: left;
+}
+
+.center {
+    text-align: center;
+    display: inline-block;
+}
+
+#power-p1 {
+    width: fit-content;
+}
+
+#power-display, #powercap-p1, #powercap-display, #power-p1 {
     float: left;
 }
 
@@ -50,29 +65,47 @@ h3 {
 .currency-displays {
     display: inline;
     position: absolute;
-    top: 0;
-    left: 0;
+    grid-area: currency;
     padding: 10px;
 }
 
-#cash-p1 {
+#cash-p1, #energy-p1, #power-p1, #powercap-p1 {
     margin-right: 10px;
+    margin-left: 5px;
+}
+
+#energy-p1, #energy-display {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 #button1 {
     border: 2px solid rgb(0, 217, 255);
 }
 
-#button4 {
+#button4, #button8, #button14 {
     border: 2px solid rgb(200, 0, 0);
 }
 
-#button5_1, #button5_2, #button5_3, #button5_4, #button5_5{
+#button5_1, #button5_2, #button5_3, #button5_4, #button5_5 {
     border: 2px solid rgb(209, 178, 0);
+}
+
+#button15a, #button15b {
+    border: 2px solid rgb(132, 25, 146);
+}
+
+#button19 {
+    border: 2px solid rgb(201, 74, 0);
 }
 
 #button10 {
     border: 2px solid;
+    border-color: rgb(0, 217, 255) rgb(0, 217, 255) rgb(200, 0, 0) rgb(200, 0, 0);
+}
+
+#button20 {
+    border: 2px double;
     border-color: rgb(0, 217, 255) rgb(0, 217, 255) rgb(200, 0, 0) rgb(200, 0, 0);
 }
 
@@ -96,6 +129,46 @@ a:active {
     text-decoration: none;
 }
 
+#kofilink:link {
+    color: aquamarine;
+    text-decoration: none;
+}
+
+#kofilink:visited {
+    color: aquamarine;
+    text-decoration: none;
+}
+
+#kofilink:hover {
+    color: rgb(85, 166, 139);
+    text-decoration: none;
+}
+
+#kofilink:active {
+    color: aquamarine;
+    text-decoration: none;
+}
+
+#resetlink:link {
+    color: red;
+    text-decoration: none;
+}
+
+#resetlink:visited {
+    color: red;
+    text-decoration: none;
+}
+
+#resetlink:hover {
+    color: rgb(169, 0, 0);
+    text-decoration: none;
+}
+
+#resetlink:active {
+    color: red;
+    text-decoration: none;
+}
+
 .buttoncontainers {
     display: inline-block;
     max-height: 250px;
@@ -112,19 +185,23 @@ a:active {
     display: grid;
     grid-template-areas: 
     "sidebar panel";
-    grid-template-columns: 100px 1fr;
+    height: fit-content;
+    grid-template-columns: 75px 1fr;
     margin: auto;
+    width: 99%;
     position: absolute;
     top: 50%;
-    margin-top: -44px;
-    column-gap: 50px;
+    margin-top: -74px;
 }
 
 #sidebarcontainer {
     display: grid;
     grid-area: sidebar;
-    align-items: left;
+    align-items: center;
+    align-self: center;
+    justify-self: center;
     width: 50px;
+    height: fit-content;
     row-gap: 10px;
 }
 
@@ -132,7 +209,8 @@ a:active {
     display: flex;
     grid-area: panel;
     place-self: center;
-    width: fit-content;
+    width: 900px;
+    height: 350px;
 }
 
 #energypaneltoggle {
@@ -178,7 +256,145 @@ a:active {
 }
 
 #kofi {
+    color: aquamarine;
     font-size: 18px;
     place-self: center;
     grid-area: kofi;
+}
+
+.panel {
+    border: 3px solid;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+#energypanel {
+    border-color: rgb(255, 187, 0);
+    border-radius: 5px;
+    text-align: center;
+}
+
+#energypanelquote {
+    margin-bottom: 0px;
+}
+
+#powercontainer {
+    display: grid;
+    grid-template-areas: 
+    "power powercap";
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#power {
+    grid-area: power;
+    align-self: center;
+    justify-self: center;
+}
+
+#powercap {
+    grid-area: powercap;
+    align-self: center;
+    justify-self: center;
+}
+
+#powerbutton {
+    background: rgb(30, 30, 30);
+    border: 2px solid rgb(255, 187, 0);
+    border-radius: 5px;
+    padding: 20px 30px;
+    width: fit-content;
+    display: inline-block;
+    margin: 0 0 35px 0;
+}
+
+.ebuttons {
+    background: rgb(30, 30, 30);
+    border: 2px solid rgb(255, 187, 0);
+    display: inline-block;
+    padding: 0 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    min-width: 190px;
+    height: 126px;
+    place-items: center;
+    place-content: center;
+    text-align: center;
+}
+
+.ebuttonwrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "eb1 eb2 eb3 eb4";
+    text-align: center;
+    height: 107.5px;
+    place-items: center;
+}
+
+#ebutton1 {
+    grid-area: eb1;
+}
+
+#ebutton2 {
+    grid-area: eb2;
+}
+
+#ebutton3 {
+    grid-area: eb3;
+}
+
+#ebutton4 {
+    grid-area: eb4;
+}
+
+.energyclass {
+    float: left;
+}
+
+#headergrid {
+    display: grid;
+    text-align: center;
+    grid-template-areas: 
+    "currency playtime";
+    grid-template-columns: 1fr 1fr;
+    position: absolute;
+    top: 0px;
+    width: 99%;
+}
+
+#playtime {
+    display: inline;
+    position: absolute;
+    right: 5px;
+    padding: 10px;
+    text-align: right;
+    font-size: 19px;
+}
+
+#errormsg {
+    color: rgb(213, 0, 0);
+    font-size: 15px;
+    opacity: 0;
+    position: absolute;
+    top: 240px;
+    transform: translate(-50%, 0);
+    text-align: center;
+    display: inline-block;
+}
+
+@keyframes anim {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+.fadeanim {
+    animation-name: anim;
+    animation-duration: 2.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
 }
