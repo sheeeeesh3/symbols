@@ -49,7 +49,7 @@
             <p id="button17" class="mainbuttons hidden" onclick="b17bought()">button 17 <br> playtime boosts <span style="color: aqua">$</span> <em><span style="color:rgb(99, 99, 99)">(x log3(playtime))</span></em> <br> costs <span style="color: aqua">$</span>2M and 30,000<span style="color: rgb(255, 187, 0)">!</span></p>
             <p id="button18" class="mainbuttons hidden" onclick="b18bought()">button 18 <br> x2.5 <span style="color: rgb(255, 187, 0)">!</span> from 6am to 9am <br> costs 15,000<span style="color: rgb(255, 187, 0)">!</span></p>
             <p id="button19" class="mainbuttons hidden" onclick="b19bought()">button 19 <br> increase power cap via <em>current</em> <span style="color: aqua">$</span> <br> costs 25,000<span style="color: rgb(255, 187, 0)">!</span></p>
-            <p id="button20" class="mainbuttons hidden" onclick="b20bought()">button 20 <br> unlock the <span style="color: rgb(167, 111, 0)">&cent;</span> panel <br> costs <span style="color: aqua">$</span>10M and 75,000<span style="color: rgb(255, 187, 0)">!</span></p>
+            <p id="button20" class="mainbuttons hidden" onclick="b20bought()">button 20 <br> unlock the <span style="color: rgb(167, 111, 0)">&cent;</span> panel <br> costs <span style="color: aqua">$</span>50M and 100,000<span style="color: rgb(255, 187, 0)">!</span></p>
             <br>
             <p id="sub1" class="descsubs"><span style="color: rgb(0, 217, 255)">-</span> = new feature</p>
             <p id="sub2" class="descsubs hidden"><span style="color: rgb(200, 0, 0)">-</span> = dead end</p>
@@ -65,6 +65,7 @@
             <div id="sidebarcontainer">
                 <div class="sidebaritem hidden" id="energypaneltoggle">!</div>
                 <div class="sidebaritem hidden" id="sidebartoggle">?</div>
+                <div class="sidebaritem hidden" id="cryptopaneltoggle">&cent;</div>
             </div>
             <div id="panelcontainer">
                 <div class="panel hidden" id="energypanel">
@@ -101,7 +102,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel hidden" id="cryptopanel">
+                    <p id="cryptopanelquote"><span style="color: rgb(167, 111, 0);font-size:20px">"click to gain (maybe)"</span></p>
+                </div>
             </div>
+        </div>
+
+        <div id="antimobile" class="hidden">
+            <p id="antichild">sorry, but symbols wasn't designed for mobile devices. try using your computer!</p>
         </div>
 
         <br><br>
