@@ -12,6 +12,10 @@ var energy = 0;
 var energymult = 1;
 var energyadd = 0;
 var energybase = 0;
+var crypto = 0;
+var cryptomult = 1;
+var cryptoadd = 0;
+var cryptobase = 0;
 var power = 0;
 var powerreducetime = 0.4;
 var powersubtractor = 1;
@@ -64,6 +68,10 @@ var eb3cost = 250;
 var eb4cost1 = 500;
 var eb4cost2 = 50000;
 var eb4mult = 1;
+var cryptochance = 100;
+var rarecryptochance = 500;
+var minecooldown = 3;
+var onminecooldown = false;
 var displaycash = 0;
 var displaycashbase = 0;
 var displayenergy = 0;
@@ -131,6 +139,10 @@ function checkdata() {
                                                     } else {
                                                         if (b20b == false) {
                                                             document.getElementById("button20").setAttribute("class", "mainbuttons");
+                                                            document.getElementById("sub6").setAttribute("class", "descsubs");
+                                                        } else {
+                                                            document.getElementById("sidebartoggle").setAttribute("class", "sidebaritem");
+                                                            document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem");
                                                         }
                                                     }
                                                 }
@@ -315,6 +327,7 @@ function resetdata() {
 var savetime = 0;
 var powertime = 0;
 var timecount = 0;
+var minecount = 0;
 function update() {
     // deals w/ $ display
     moneybase = (0.1 + moneyadd/10) * (moneymult * (b5exp + b7formula)) * (b6mult * eb4mult * b12mult * b14mult) * b17boost;
@@ -354,6 +367,16 @@ function update() {
     }
     document.getElementById("energy-display").innerHTML = commanum(displayenergy) + " (" + commanum(displayenergybase) + "/s)";
 
+    // crypto stuff
+    cryptobase = (1 + cryptoadd) * cryptomult;
+    if (onminecooldown == true) {
+        minecount++;
+        if (minecount >= minecooldown*10) {
+            onminecooldown = false;
+            minecount = 0;
+        }
+    }
+    
     // displays power stuff
     document.getElementById("power-display").innerHTML = commanum(power) + " J";
     document.getElementById("powercap-display").innerHTML = commanum(powercap) + " J";
@@ -441,46 +464,35 @@ function commanum(x) {
 // panel code
 let panelOpen = false;
 let sidebarOpen = true;
-document.getElementById("energypaneltoggle").onclick = function() {panelinteract("energypaneltoggle");}
+document.getElementById("energypaneltoggle").onclick = function() {panelinteract("energypanel");}
 document.getElementById("sidebartoggle").onclick = function() {sidebarinteract();}
+document.getElementById("cryptopaneltoggle").onclick = function() {panelinteract("cryptopanel")}
 
-function panelinteract(buttonid) {
-    if (!buttonid) {
+function panelinteract(panelid) {
+    if (!panelid) {
         document.write("something very not good seems to have happened (reload the page i guess?)");
         return;
     } else if (panelOpen == false) {
-        openpanel(buttonid);
-    } else if (panelOpen == true) {
-        switchpanel(buttonid);
-    }
-
-    function openpanel(btnid) {
-        if (btnid == "energypaneltoggle") {
-            document.getElementById("energypanel").setAttribute("class", "panel");
-        }
+        document.getElementById("energypanel").setAttribute("class", "panel hidden");
+        document.getElementById("cryptopanel").setAttribute("class", "panel hidden");
+        document.getElementById(panelid).setAttribute("class", "panel");
         panelOpen = true;
-    }
-    function switchpanel(btnid) {
-        if (btnid == "energypaneltoggle") {
-            if (document.getElementById("energypanel").classList.contains("panel")) {
-                document.getElementById("energypanel").setAttribute("class", "panel hidden");
-                panelOpen = false;
-            } else if (document.getElementById("energypanel").classList.contains("panel hidden")) {
-                document.getElementsByClassName("panel").setAttribute("class", "panel hidden");
-                document.getElementById("energypanel").setAttribute("class", "panel");
-            }
-        }
+    } else if (panelOpen == true) {
+        document.getElementById("energypanel").setAttribute("class", "panel hidden");
+        document.getElementById("cryptopanel").setAttribute("class", "panel hidden");
+        panelOpen = false;
     }
 }
 
 function sidebarinteract() {
     if (sidebarOpen == true) {
-        // document.getElementsByClassName("panel").setAttribute("class", "panel hidden");
         document.getElementById("energypaneltoggle").setAttribute("class", "sidebaritem hidden");
+        document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem hidden");
         document.getElementById("sidebartoggle").setAttribute("class", "sidebaritem");
         sidebarOpen = false;
     } else if (sidebarOpen == false) {
         document.getElementById("energypaneltoggle").setAttribute("class", "sidebaritem");
+        document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem");
         sidebarOpen = true;
     }
      
@@ -491,6 +503,28 @@ function powerbutton() {
     power += powerperclick;
     if (power > powercap) {
         power = powercap;
+    }
+}
+
+// miner function
+function minerbutton() {
+    if (onminecooldown == false) {
+        var minechance = Math.floor(Math.random() * cryptochance);
+        var rareminechance = Math.floor(Math.random() * rarecryptochance);
+
+        if (rareminechance == 0) {
+            crypto += 5 * cryptobase;
+            // alert goes here
+        } else if (minechance == 0) {
+            crypto += cryptobase;
+            // alert goes here
+        } else {
+            // alert goes here
+        }
+
+        onminecooldown = true;
+    } else {
+        // alert goes here
     }
 }
 
@@ -816,16 +850,16 @@ function b19bought() {
 }
 
 function b20bought() {
-    if (money >= 10000000 && energy >= 75000) {
-        /* amount++;
+    if (money >= 50000000 && energy >= 100000) {
+        amount++;
         b20b = true;
-        money -= 10000000;
-        energy -= 75000; 
+        money -= 50000000;
+        energy -= 100000; 
         document.getElementById("button20").setAttribute("class", "mainbuttons hidden");
-        document.getElementById("sub6").setAttribute("class", "descsubs hidden"); */
-        errormsg("wip, check back later");
+        document.getElementById("sub6").setAttribute("class", "descsubs hidden");
+        document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem");
     } else {
-        errormsg("you need at least $10M and 75,000! to buy this");
+        errormsg("you need at least $50M and 100,000! to buy this");
     }
 }
 
@@ -914,6 +948,19 @@ document.getElementById("cash-display").innerHTML = " 0.00 ";
 // loads data
 if (localStorage.getItem("saveGame") != null) {
     load();
+}
+
+// checks for mobile users
+var hasTouchScreen = true;
+
+var UA = navigator.userAgent;
+hasTouchScreen = (
+    /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
+    /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
+);
+
+if (hasTouchScreen) {
+    document.getElementById("antimobile").setAttribute("class", "");
 }
 
 // silly thing from cookie clicker (parsed in very easy-to-understand code)
