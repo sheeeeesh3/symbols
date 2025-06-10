@@ -9,6 +9,12 @@ body {
     font-weight: bold;
 }
 
+@media only screen and (max-width: 700px) {
+    #antimobile {
+        display: inline-block;
+    }
+}
+
 .mainbuttonwrapper {
     text-align: center;
     height: fit-content;
@@ -317,6 +323,7 @@ a:active {
 #powerbutton {
     background: rgb(30, 30, 30);
     border: 2px solid rgb(255, 187, 0);
+    color: rgb(241, 192, 56);
     border-radius: 5px;
     padding: 20px 30px;
     width: fit-content;
@@ -372,6 +379,36 @@ a:active {
     border-color: rgb(167, 111, 0);
     border-radius: 5px;
     text-align: center;
+}
+
+#cryptoshop {
+
+    margin-top: 25px;
+}
+
+#minerbutton {
+    background: rgb(30, 30, 30);
+    border: 2px solid rgb(167, 111, 0);
+    color: rgb(196, 138, 22);
+    border-radius: 5px;
+    padding: 20px 30px;
+    width: fit-content;
+    display: inline-block;
+    margin: 30px auto 35px auto;
+}
+
+#minealert {
+    color: rgb(102, 68, 0);
+    display: inline-block;
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 4px;
+    text-align: center;
+}
+
+#cryptodisplay {
+    margin-left: 5px;
+    margin-top: 0;
 }
 
 #headergrid {
@@ -434,4 +471,20 @@ a:active {
     left: 50%;
     width: fit-content;
     transform: translate(-50%, -50%);
+}
+
+#edecal1 {
+    position: absolute;
+    top: 3px;
+    right: 280px;
+    width: 290px;
+    height: 175px;
+}
+
+#edecal2 {
+    position: absolute;
+    top: 41%;
+    left: 267px;
+    height: 20px;
+    width: 378px;
 }
