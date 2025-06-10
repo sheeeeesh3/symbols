@@ -68,14 +68,15 @@ var eb3cost = 250;
 var eb4cost1 = 500;
 var eb4cost2 = 50000;
 var eb4mult = 1;
-var cryptochance = 100;
-var rarecryptochance = 500;
+var cryptochance = 50;
+var rarecryptochance = 250;
 var minecooldown = 3;
 var onminecooldown = false;
 var displaycash = 0;
 var displaycashbase = 0;
 var displayenergy = 0;
 var displayenergybase = 0;
+var displaycrypto = 0;
 
 // functions
 function checkdata() {
@@ -196,6 +197,10 @@ function save() {
         energymult: energymult,
         energyadd: energyadd,
         energybase: energybase,
+        crypto: crypto,
+        cryptomult: cryptomult,
+        cryptoadd: cryptoadd,
+        cryptobase: cryptobase,
         powerreducetime: powerreducetime,
         powersubtractor: powersubtractor,
         powercap: powercap,
@@ -247,6 +252,9 @@ function save() {
         eb4cost1: eb4cost1,
         eb4cost2: eb4cost2,
         eb4mult: eb4mult,
+        cryptochance: cryptochance,
+        rarecryptochance: rarecryptochance,
+        minecooldown: minecooldown,
     };
 
     localStorage.setItem("saveGame", JSON.stringify(saveGame));
@@ -254,6 +262,14 @@ function save() {
 
 function load() {
     var loadGame = JSON.parse(localStorage.getItem("saveGame"));
+
+    // fail-safe so that variables created in new updates don't require a data reset to have a default value
+    function newvarcheck(x, defval) {
+        x = loadGame[x];
+        if (x == null || x == NaN) {
+            x = defval;
+        }
+    }
 
     money = loadGame.money;
     moneymult = loadGame.moneymult;
@@ -263,6 +279,10 @@ function load() {
     energymult = loadGame.energymult;
     energyadd = loadGame.energyadd;
     energybase = loadGame.energybase;
+    crypto = loadGame.crypto;
+    cryptomult = loadGame.cryptomult;
+    cryptoadd = loadGame.cryptoadd;
+    cryptobase = loadGame.cryptobase;
     powerreducetime =  loadGame.powerreducetime;
     powersubtractor = loadGame.powersubtractor;
     powercap = loadGame.powercap;
@@ -314,6 +334,9 @@ function load() {
     eb4cost1 = loadGame.eb4cost1;
     eb4cost2 = loadGame.eb4cost2;
     eb4mult = loadGame.eb4mult;
+    cryptochance = loadGame.cryptochance;
+    rarecryptochance = loadGame.rarecryptochance;
+    minecooldown = loadGame.minecooldown;
 
     checkdata();
 }
@@ -367,7 +390,15 @@ function update() {
     }
     document.getElementById("energy-display").innerHTML = commanum(displayenergy) + " (" + commanum(displayenergybase) + "/s)";
 
-    // crypto stuff
+    // deals w/ crypto display
+    if (crypto < 999999) {
+        displaycrypto = crypto.toFixed(2);
+    } else if (energy > 999999 & energy < 999999999) {
+        displaycrypto = ((crypto / 1000000).toFixed(2)) + " M";
+    }
+    document.getElementById("cryptodisplay").innerHTML = "<span style='color: rgb(167, 111, 0)'>" + "&cent;" + "</span>: " + commanum(displaycrypto);
+
+    // more crypto stuff
     cryptobase = (1 + cryptoadd) * cryptomult;
     if (onminecooldown == true) {
         minecount++;
@@ -514,17 +545,17 @@ function minerbutton() {
 
         if (rareminechance == 0) {
             crypto += 5 * cryptobase;
-            // alert goes here
+            document.getElementById("minealert").innerHTML = "you mined " + (5 * cryptobase) + "&cent;";
         } else if (minechance == 0) {
             crypto += cryptobase;
-            // alert goes here
+            document.getElementById("minealert").innerHTML = "you mined " + (cryptobase) + "&cent;";
         } else {
-            // alert goes here
+            document.getElementById("minealert").innerHTML = "you didn't mine anything...";
         }
 
         onminecooldown = true;
     } else {
-        // alert goes here
+        document.getElementById("minealert").innerHTML = "still on cooldown (" + minecooldown + " seconds)";
     }
 }
 
@@ -930,7 +961,7 @@ function eb4bought() {
     }
 }
 
-// error messages
+// error messages & assorted alerts
 function errormsg(msg) {
     document.getElementById("errormsg").innerHTML = "error: " + msg;
     document.getElementById("errormsg").classList.toggle("fadeanim");
@@ -938,6 +969,10 @@ function errormsg(msg) {
 
 document.getElementById("errormsg").addEventListener("animationend", () => {
     document.getElementById("errormsg").classList.toggle("fadeanim");
+});
+
+document.getElementById("minealert").addEventListener("animationend", () => {
+    document.getElementById("minealert").classList.toggle("fadeanim");
 });
 
 // other code
@@ -950,7 +985,7 @@ if (localStorage.getItem("saveGame") != null) {
     load();
 }
 
-// checks for mobile users
+// checks for mobile users (media query fallback)
 var hasTouchScreen = true;
 
 var UA = navigator.userAgent;
