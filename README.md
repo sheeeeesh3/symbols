@@ -1,4 +1,4 @@
-- silly little button game inspired in part by Antimatter Dimensions on Steam
+- silly little button game inspired in part by Antimatter Dimensions on Steam and Everything Upgrade Tree on Roblox
 - currently in development (like 8-10% done maybe)
 - solo project
-- can also be played at symbolsgame.glitch.me
+- can also be played at symbolsgame.vercel.app (formerly at symbolsgame.glitch.me)
