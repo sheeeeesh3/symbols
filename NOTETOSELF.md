@@ -1,5 +1,5 @@
 orders of business (when i find motivation):
-1. fix newvarcheck system (VERY IMPORTANT / FIRST PRIORITY / URGENT)
+1. fix newvarcheck system (VERY IMPORTANT / FIRST PRIORITY / URGENT / POTENTIALLY GAME-BREAKING POST-FIRST UPD)
 2. clean up / fix base &cent; code
 3. add separate cooldown timer for &cent; panel
 4. create &cent; shop
