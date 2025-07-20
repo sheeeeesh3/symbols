@@ -7,7 +7,8 @@ orders of business (when i find motivation):
 6. create ^ (levels) panel
 7. create a few buttons after ^ panel for content
 8. create a few working ^ milestones
+   - idea: button index
 
 that's all, folks!
 
-[updated 7/20/2025 @ 1:16:49 AM]
+[updated 7/20/2025 @ 1:20:11 AM]
