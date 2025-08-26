@@ -12,10 +12,10 @@ var energy = 0;
 var energymult = 1;
 var energyadd = 0;
 var energybase = 0;
-var crypto = 0;
-var cryptomult = 1;
-var cryptoadd = 0;
-var cryptobase = 0;
+var cent = 0;
+var centmult = 1;
+var centadd = 0;
+var centbase = 0;
 var power = 0;
 var powerreducetime = 0.4;
 var powersubtractor = 1;
@@ -39,7 +39,6 @@ var baseb5exp = 1.2;
 var b6b = false;
 var b6mult = 1;
 var b7b = false;
-var b7formula = 0;
 var b8b = false;
 var b9b = false;
 var b10b = false;
@@ -68,15 +67,15 @@ var eb3cost = 250;
 var eb4cost1 = 500;
 var eb4cost2 = 50000;
 var eb4mult = 1;
-var cryptochance = 50;
-var rarecryptochance = 250;
+var centchance = 50;
+var rarecentchance = 250;
 var minecooldown = 3;
 var onminecooldown = false;
 var displaycash = 0;
 var displaycashbase = 0;
 var displayenergy = 0;
 var displayenergybase = 0;
-var displaycrypto = 0;
+var displaycent = 0;
 
 // functions
 function checkdata() {
@@ -143,7 +142,7 @@ function checkdata() {
                                                             document.getElementById("sub6").setAttribute("class", "descsubs");
                                                         } else {
                                                             document.getElementById("sidebartoggle").setAttribute("class", "sidebaritem");
-                                                            document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem");
+                                                            document.getElementById("centpaneltoggle").setAttribute("class", "sidebaritem");
                                                         }
                                                     }
                                                 }
@@ -197,10 +196,10 @@ function save() {
         energymult: energymult,
         energyadd: energyadd,
         energybase: energybase,
-        crypto: crypto,
-        cryptomult: cryptomult,
-        cryptoadd: cryptoadd,
-        cryptobase: cryptobase,
+        cent: cent,
+        centmult: centmult,
+        centadd: centadd,
+        centbase: centbase,
         powerreducetime: powerreducetime,
         powersubtractor: powersubtractor,
         powercap: powercap,
@@ -223,7 +222,6 @@ function save() {
         b6b: b6b,
         b6mult: b6mult,
         b7b: b7b,
-        b7formula: b7formula,
         b8b: b8b,
         b9b: b9b,
         b10b: b10b,
@@ -252,8 +250,8 @@ function save() {
         eb4cost1: eb4cost1,
         eb4cost2: eb4cost2,
         eb4mult: eb4mult,
-        cryptochance: cryptochance,
-        rarecryptochance: rarecryptochance,
+        centchance: centchance,
+        rarecentchance: rarecentchance,
         minecooldown: minecooldown,
     };
 
@@ -264,7 +262,7 @@ function load() {
     var loadGame = JSON.parse(localStorage.getItem("saveGame"));
 
     // fail-safe so that variables created in new updates don't require a data reset to have a default value
-    function newvarcheck(x, defval) {
+    function varcheck(x, defval) {
         x = loadGame[x];
         if (x == null || x == NaN) {
             x = defval;
@@ -279,10 +277,10 @@ function load() {
     energymult = loadGame.energymult;
     energyadd = loadGame.energyadd;
     energybase = loadGame.energybase;
-    crypto = loadGame.crypto;
-    cryptomult = loadGame.cryptomult;
-    cryptoadd = loadGame.cryptoadd;
-    cryptobase = loadGame.cryptobase;
+    cent = loadGame.cent;
+    centmult = loadGame.centmult;
+    centadd = loadGame.centadd;
+    centbase = loadGame.centbase;
     powerreducetime =  loadGame.powerreducetime;
     powersubtractor = loadGame.powersubtractor;
     powercap = loadGame.powercap;
@@ -305,7 +303,6 @@ function load() {
     b6b = loadGame.b6b;
     b6mult = loadGame.b6mult;
     b7b = loadGame.b7b;
-    b7formula = loadGame.b7formula;
     b8b = loadGame.b8b;
     b9b = loadGame.b9b;
     b10b = loadGame.b10b;
@@ -334,8 +331,8 @@ function load() {
     eb4cost1 = loadGame.eb4cost1;
     eb4cost2 = loadGame.eb4cost2;
     eb4mult = loadGame.eb4mult;
-    cryptochance = loadGame.cryptochance;
-    rarecryptochance = loadGame.rarecryptochance;
+    centchance = loadGame.centchance;
+    rarecentchance = loadGame.rarecentchance;
     minecooldown = loadGame.minecooldown;
 
     checkdata();
@@ -353,53 +350,77 @@ var timecount = 0;
 var minecount = 0;
 function update() {
     // deals w/ $ display
-    moneybase = (0.1 + moneyadd/10) * (moneymult * (b5exp + b7formula)) * (b6mult * eb4mult * b12mult * b14mult) * b17boost;
+    moneybase = (0.1 + moneyadd/10) * (moneymult * (b5exp + amount/2)) * (b6mult * eb4mult * b12mult * b14mult) * b17boost;
     money += moneybase;
-    if (money < 999999) {
+    if (money < 10^6) {
         displaycash = money.toFixed(2);
-    } else if (money > 999999 & money < 999999999) {
-        displaycash = ((money / 1000000).toFixed(2)) + " M";
-    } else if (money > 999999999 && money < 999999999999) {
-        displaycash = ((money / 1000000000).toFixed(2)) + " B";
+    } else if (money > (10^6 - 1) && money < 10^9) {
+        displaycash = ((money / (10^6)).toFixed(2)) + " M";
+    } else if (money > (10^9 - 1) && money < 10^12) {
+        displaycash = ((money / (10^9)).toFixed(2)) + " B";
+    } else if (money > (10^12 - 1) && money < 10^15) {
+        displaycash = ((money / (10^12)).toFixed(2)) + " T";
+    } else if (money > (10^15 - 1) && money < 2^53) {
+        displaycash = ((money / (10^15)).toFixed(2)) + " Qd";
+    } else if (money > 2^53) {
+        displaycash = "tooBig";
     }
-    if (moneybase < 999999) {
+    if (moneybase < 10^6) {
         displaycashbase = (moneybase * 10).toFixed(2);
-    } else if (moneybase > 999999 && moneybase < 999999999) {
-        displaycashbase = ((moneybase / 100000).toFixed(2)) + " M";
-    } else if (moneybase > 999999999 && moneybase < 999999999999) {
-        displaycashbase = ((moneybase / 100000000).toFixed(2)) + " B";
+    } else if (moneybase > (10^6 - 1) && moneybase < 10^9) {
+        displaycashbase = ((moneybase / (10^5)).toFixed(2)) + " M";
+    } else if (moneybase > (10^9 - 1) && moneybase < (10^12)) {
+        displaycashbase = ((moneybase / (10^8)).toFixed(2)) + " B";
+    } else if (moneybase > (10^12 - 1) && moneybase < 10^15) {
+        displaycashbase = ((moneybase / (10^11)).toFixed(2)) + " T";
+    } else if (moneybase > (10^15 - 1) && moneybase < 2^53) {
+        displaycashbase = ((moneybase / (10^14)).toFixed(2)) + " Qd";
+    } else if (moneybase > 2^53) {
+        displaycashbase = "tooBig";
     }
     document.getElementById("cash-display").innerHTML = commanum(displaycash) + " (" + commanum(displaycashbase) + "/s)";
 
     // deals w/ ! display
     energybase = (((power**2)/10)/10 + energyadd/10) * (energymult * eb4mult) * b13boost * (b14mult * b18mult);
     energy += energybase;
-    if (energy < 999999) {
+    if (energy < 10^6) {
         displayenergy = energy.toFixed(2);
-    } else if (energy > 999999 & energy < 999999999) {
-        displayenergy = ((energy / 1000000).toFixed(2)) + " M";
-    } else if (energy > 999999999 && energy < 999999999999) {
-        displayenergy = ((energy / 1000000000).toFixed(2)) + " B";
+    } else if (energy > (10^6 - 1) && energy < 10^9) {
+        displayenergy = ((energy / (10^6)).toFixed(2)) + " M";
+    } else if (energy > (10^9 - 1) && energy < 10^12) {
+        displayenergy = ((energy / (10^9)).toFixed(2)) + " B";
+    } else if (energy > (10^12 - 1) && energy < 10^15) {
+        displayenergy = ((energy / (10^12)).toFixed(2)) + " T";
+    } else if (energy > (10^15 - 1) && energy < 2^53) {
+        displayenergy = ((energy / (10^15)).toFixed(2)) + " Qd";
+    } else if (energy > 2^53) {
+        displayenergy = "tooBig";
     }
-    if (energybase < 999999) {
+    if (energybase < 10^6) {
         displayenergybase = (energybase * 10).toFixed(2);
-    } else if (energybase > 999999 && energybase < 999999999) {
-        displayenergybase = ((energybase / 100000).toFixed(2)) + " M";
-    } else if (energybase > 999999999 && energybase < 999999999999) {
-        displayenergybase = ((energybase / 100000000).toFixed(2)) + " B";
+    } else if (energybase > (10^6 - 1) && energybase < 10^9) {
+        displayenergybase = ((energybase / (10^5)).toFixed(2)) + " M";
+    } else if (energybase > (10^9 - 1) && energybase < 10^12) {
+        displayenergybase = ((energybase / (10^8)).toFixed(2)) + " B";
+    } else if (energybase > (10^12 - 1) && energybase < 10^15) {
+        displayenergybase = ((energybase / (10^11)).toFixed(2)) + " T";
+    } else if (energybase > (10^15 - 1) && energybase < 2^53) {
+        displayenergybase = ((energybase / (10^14)).toFixed(2)) + " Qd";
+    } else if (energybase > 2^53) {
+        displayenergybase = "tooBig";
     }
     document.getElementById("energy-display").innerHTML = commanum(displayenergy) + " (" + commanum(displayenergybase) + "/s)";
 
-    // deals w/ crypto display
-    if (crypto < 999999) {
-        displaycrypto = crypto.toFixed(2);
-    } else if (energy > 999999 & energy < 999999999) {
-        displaycrypto = ((crypto / 1000000).toFixed(2)) + " M";
+    // deals w/ cent display
+    if (cent < 10^6) {
+        displaycent = cent.toFixed(2);
+    } else if (energy > (10^6 - 1) & energy < 10^9) {
+        displaycent = ((cent / (10^6)).toFixed(2)) + " M";
     }
-    document.getElementById("cryptodisplay").innerHTML = "<span style='color: rgb(167, 111, 0)'>" + "&cent;" + "</span>: " + commanum(displaycrypto);
+    document.getElementById("centdisplay").innerHTML = "<span style='color: rgb(167, 111, 0)'>" + "&cent;" + "</span>: " + commanum(displaycent);
 
-    // more crypto stuff
-    cryptobase = (1 + cryptoadd) * cryptomult;
+    // more cent stuff
+    centbase = (1 + centadd) * centmult;
     if (onminecooldown == true) {
         minecount++;
         if (minecount >= minecooldown*10) {
@@ -497,7 +518,7 @@ let panelOpen = false;
 let sidebarOpen = true;
 document.getElementById("energypaneltoggle").onclick = function() {panelinteract("energypanel");}
 document.getElementById("sidebartoggle").onclick = function() {sidebarinteract();}
-document.getElementById("cryptopaneltoggle").onclick = function() {panelinteract("cryptopanel")}
+document.getElementById("centpaneltoggle").onclick = function() {panelinteract("centpanel")}
 
 function panelinteract(panelid) {
     if (!panelid) {
@@ -505,12 +526,12 @@ function panelinteract(panelid) {
         return;
     } else if (panelOpen == false) {
         document.getElementById("energypanel").setAttribute("class", "panel hidden");
-        document.getElementById("cryptopanel").setAttribute("class", "panel hidden");
+        document.getElementById("centpanel").setAttribute("class", "panel hidden");
         document.getElementById(panelid).setAttribute("class", "panel");
         panelOpen = true;
     } else if (panelOpen == true) {
         document.getElementById("energypanel").setAttribute("class", "panel hidden");
-        document.getElementById("cryptopanel").setAttribute("class", "panel hidden");
+        document.getElementById("centpanel").setAttribute("class", "panel hidden");
         panelOpen = false;
     }
 }
@@ -518,12 +539,16 @@ function panelinteract(panelid) {
 function sidebarinteract() {
     if (sidebarOpen == true) {
         document.getElementById("energypaneltoggle").setAttribute("class", "sidebaritem hidden");
-        document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem hidden");
+        document.getElementById("centpaneltoggle").setAttribute("class", "sidebaritem hidden");
         document.getElementById("sidebartoggle").setAttribute("class", "sidebaritem");
         sidebarOpen = false;
     } else if (sidebarOpen == false) {
-        document.getElementById("energypaneltoggle").setAttribute("class", "sidebaritem");
-        document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem");
+        if (b10b == true) {
+            document.getElementById("energypaneltoggle").setAttribute("class", "sidebaritem");
+        }
+        if (b20b == true) {
+            document.getElementById("centpaneltoggle").setAttribute("class", "sidebaritem");
+        }
         sidebarOpen = true;
     }
      
@@ -540,15 +565,15 @@ function powerbutton() {
 // miner function
 function minerbutton() {
     if (onminecooldown == false) {
-        var minechance = Math.floor(Math.random() * cryptochance);
-        var rareminechance = Math.floor(Math.random() * rarecryptochance);
+        var minechance = Math.floor(Math.random() * centchance);
+        var rareminechance = Math.floor(Math.random() * rarecentchance);
 
         if (rareminechance == 0) {
-            crypto += 5 * cryptobase;
-            document.getElementById("minealert").innerHTML = "you mined " + (5 * cryptobase) + "&cent;";
+            cent += 5 * centbase;
+            document.getElementById("minealert").innerHTML = "you mined " + (5 * centbase) + "&cent;";
         } else if (minechance == 0) {
-            crypto += cryptobase;
-            document.getElementById("minealert").innerHTML = "you mined " + (cryptobase) + "&cent;";
+            cent += centbase;
+            document.getElementById("minealert").innerHTML = "you mined " + (centbase) + "&cent;";
         } else {
             document.getElementById("minealert").innerHTML = "you didn't mine anything...";
         }
@@ -663,7 +688,6 @@ function b7bought() {
     if (money >= 900) {
         amount = 7;
         b7b = true;
-        b7formula = amount / 2;
         money -= 900;
         document.getElementById("button7").setAttribute("class", "mainbuttons hidden");
         document.getElementById("button8").setAttribute("class", "mainbuttons");
@@ -830,7 +854,8 @@ function b16bought() {
     if (money >= 456789) {
         amount++;
         b16b = true;
-        b7formula = 1.15 ** amount;
+        moneymult *= 1.618;
+        energymult *= 1.618;
         money -= 456789;
         document.getElementById("button16").setAttribute("class", "mainbuttons hidden");
         document.getElementById("button17").setAttribute("class", "mainbuttons");
@@ -888,7 +913,7 @@ function b20bought() {
         energy -= 100000; 
         document.getElementById("button20").setAttribute("class", "mainbuttons hidden");
         document.getElementById("sub6").setAttribute("class", "descsubs hidden");
-        document.getElementById("cryptopaneltoggle").setAttribute("class", "sidebaritem");
+        document.getElementById("centpaneltoggle").setAttribute("class", "sidebaritem");
     } else {
         errormsg("you need at least $50M and 100,000! to buy this");
     }
@@ -971,6 +996,7 @@ document.getElementById("errormsg").addEventListener("animationend", () => {
     document.getElementById("errormsg").classList.toggle("fadeanim");
 });
 
+// unused for the time being
 document.getElementById("minealert").addEventListener("animationend", () => {
     document.getElementById("minealert").classList.toggle("fadeanim");
 });
@@ -980,12 +1006,7 @@ document.getElementById("minealert").addEventListener("animationend", () => {
 // default display before data loads
 document.getElementById("cash-display").innerHTML = " 0.00 ";
 
-// loads data
-if (localStorage.getItem("saveGame") != null) {
-    load();
-}
-
-// checks for mobile users (media query fallback)
+// checks for mobile users (fallback for media query)
 var hasTouchScreen = true;
 
 var UA = navigator.userAgent;
@@ -996,6 +1017,11 @@ hasTouchScreen = (
 
 if (hasTouchScreen) {
     document.getElementById("antimobile").setAttribute("class", "");
+}
+
+// loads data
+if (localStorage.getItem("saveGame") != null) {
+    load();
 }
 
 // silly thing from cookie clicker (parsed in very easy-to-understand code)
